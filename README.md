@@ -1,6 +1,6 @@
 # Business Workflow API
 
-This project is a simple API to move a business through a workflow. The workflow stages are:
+This assignment, provided by GLOW, presents a solution for progressing a business through various workflow stages. The workflow stages are:
 
 - New: A new business has been created in the system.
 - Market Approved: The business industry is within the target market.
