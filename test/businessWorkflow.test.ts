@@ -16,7 +16,7 @@ describe('Business Workflow API', () => {
         expect(res.status).toBe(201);
         expect(res.body).toBeInstanceOf(Object);
         expect(res.body.business).toHaveProperty('status', 'New');
-        expect(res.body).toHaveProperty('nextStep', 'Provide industry to progress from "New" stage. Supported industries: restaurants, stores.');
+        expect(res.body).toHaveProperty('nextStep', 'Provide industry to progress from New stage. Supported industries: restaurants, stores.');
     });
 
     it('should update business to Market Approved', async () => {
@@ -27,7 +27,7 @@ describe('Business Workflow API', () => {
         expect(res.status).toBe(200);
         expect(res.body).toBeInstanceOf(Object);
         expect(res.body.business).toHaveProperty('status', 'Market Approved');
-        expect(res.body).toHaveProperty('nextStep', 'Provide contact information to progress from "Market Approved" stage.');
+        expect(res.body).toHaveProperty('nextStep', 'Provide contact information to progress from Market Approved stage.');
     });
 
     it('should update business to Sales Approved', async () => {
@@ -38,7 +38,7 @@ describe('Business Workflow API', () => {
         expect(res.status).toBe(200);
         expect(res.body).toBeInstanceOf(Object);
         expect(res.body.business).toHaveProperty('status', 'Sales Approved');
-        expect(res.body).toHaveProperty('nextStep', 'Business can now be marked as "Won" or "Lost".');
+        expect(res.body).toHaveProperty('nextStep', 'Business can now be marked as Won or Lost.');
     });
 
     it('should mark business as Won', async () => {
@@ -54,7 +54,7 @@ describe('Business Workflow API', () => {
 
     it('should return 404 for non-existent business', async () => {
         const res = await request(app)
-            .put('/api/businesses/000000000')
+            .put('/api/businesses/007')
             .send({ status: 'Won' });
 
         expect(res.status).toBe(404);

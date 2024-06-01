@@ -7,11 +7,15 @@ export const createBusiness = (req: Request, res: Response): void => {
         res.status(400).json({ message: 'FEIN and Name are required' });
         return;
     }
+    if (!/^\d{9}$/.test(fein)) {
+        res.status(400).json({ message: 'FEIN must be a 9-digit number' });
+        return;
+    }
     const business = new Business(fein, name);
     businesses.push(business);
     res.status(201).json({
         business,
-        nextStep: 'Provide industry to progress from "New" stage. Supported industries: restaurants, stores.'
+        nextStep: 'Provide industry to progress from New stage. Supported industries: restaurants, stores.'
     });
 };
 
@@ -30,18 +34,17 @@ export const updateBusiness = (req: Request, res: Response): void => {
     if (industry) business.industry = industry;
     if (contact) business.contact = contact;
 
-    // Workflow logic
     if (business.status === 'New' && business.industry) {
         if (['restaurants', 'stores'].includes(business.industry)) {
             business.status = 'Market Approved';
-            nextStep = 'Provide contact information to progress from "Market Approved" stage.';
+            nextStep = 'Provide contact information to progress from Market Approved stage.';
         } else {
             business.status = 'Market Declined';
         }
     } else if (business.status === 'Market Approved' && business.contact) {
         if (business.contact.name && business.contact.phone) {
             business.status = 'Sales Approved';
-            nextStep = 'Business can now be marked as "Won" or "Lost".';
+            nextStep = 'Business can now be marked as Won or Lost.';
         }
     } else if (business.status === 'Sales Approved' && status) {
         if (['Won', 'Lost'].includes(status)) {
@@ -50,9 +53,9 @@ export const updateBusiness = (req: Request, res: Response): void => {
         }
     } else {
         if (business.status === 'New') {
-            nextStep = 'Provide industry to progress from "New" stage. Supported industries: restaurants, stores.';
+            nextStep = 'Provide industry to progress from New stage. Supported industries: restaurants, stores.';
         } else if (business.status === 'Market Approved') {
-            nextStep = 'Provide contact information to progress from "Market Approved" stage.';
+            nextStep = 'Provide contact information to progress from Market Approved stage.';
         } else if (business.status === 'Sales Approved') {
             nextStep = 'Business can now be marked as "Won" or "Lost".';
         }
