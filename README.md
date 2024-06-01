@@ -36,7 +36,7 @@ This project is a simple API to move a business through a workflow. The workflow
 1. Clone the repository:
     ```bash
     git clone https://github.com/MuhammadTalhaSarwar/express-buisness-workflow.git
-    cd your-repository
+    cd express-buisness-workflow
     ```
 
 2. Install dependencies:
